@@ -13,7 +13,11 @@ class AppFactory: AppFactoryProtocol {
 //    private var networkSession: NetworkSession {
 //        URLNetworkSession(session: URLSession.shared)
 //    }
-//    
+//
+    private var persistenceController: PersistenceController {
+        PersistenceController.shared
+    }
+    
     private var networkSession: NetworkSession {
         MockNetworkSession()
     }
@@ -22,9 +26,14 @@ class AppFactory: AppFactoryProtocol {
         NetworkClient(session: networkSession)
     }
     
-    private var eventRepository: IEventsRepository {
-        EventsRepository(networkClient: networkClient)
+    private var eventStore: IEventStore {
+        EventStore(context: persistenceController.viewContext)
     }
+    
+    private var eventRepository: IEventsRepository {
+        EventsRepository(networkClient: networkClient, eventStore: eventStore)
+    }
+
     
     private var getNearByEventsUseCase: GetNearbyEventsUseCase {
         GetNearbyEventsUseCase(repository: eventRepository)

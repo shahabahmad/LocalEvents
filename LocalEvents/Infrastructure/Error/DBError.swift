@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+enum DBError: Error {
+    case saveFailed(Error)
+    case fetchFailed(Error)
+    case other
+}

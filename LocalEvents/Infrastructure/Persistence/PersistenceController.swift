@@ -14,7 +14,7 @@ struct PersistenceController {
     let container: NSPersistentContainer
 
     init(inMemory: Bool = false) {
-        container = NSPersistentContainer(name: "Events")
+        container = NSPersistentContainer(name: "LocalEvents")
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }
@@ -35,5 +35,9 @@ struct PersistenceController {
             }
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
+    }
+    
+    var viewContext: NSManagedObjectContext {
+        container.viewContext
     }
 }

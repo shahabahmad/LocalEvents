@@ -12,7 +12,7 @@ protocol IBookmarkRepository {
     
     func getBookmarkedEvents() -> AnyPublisher<[LocalEvent], RepositoryError>
     
-    func bookmark(event: LocalEvent) -> AnyPublisher<Void, RepositoryError>
+    func addBookmark(event: LocalEvent) -> AnyPublisher<Void, RepositoryError>
     
     func removeBookmark(event: LocalEvent) -> AnyPublisher<Void, RepositoryError>
 }

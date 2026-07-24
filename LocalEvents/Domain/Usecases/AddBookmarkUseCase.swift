@@ -17,6 +17,6 @@ class AddBookmarkUseCase {
     }
     
     func addBookmark(event: LocalEvent) -> AnyPublisher<Void, RepositoryError> {
-        self.repository.bookmark(event: event)
+        self.repository.addBookmark(event: event)
     }
 }
