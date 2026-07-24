@@ -10,15 +10,27 @@ import SwiftUI
 struct EventChildView: View {
     
     let event: LocalEvent
-    
+    let coordinate: Coordinate?
     var bookmarkTapped: () -> Void
+    let distanceCalulator = DistanceCalculator()
     
     var body: some View {
         HStack {
-            Text(event.title)
-                .font(.footnote)
-                .multilineTextAlignment(.leading)
-                .lineLimit(2)
+            VStack(alignment: .leading) {
+                Text(event.title)
+                    .font(.footnote)
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(2)
+                if let coordinate = coordinate {
+                    let distance = distanceCalulator.calculate(from: coordinate, to: event.location)
+                    Text("\(distance) metres")
+                        .font(.footnote)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(2)
+                }
+
+            }
+
                 
             Spacer()
             Button {

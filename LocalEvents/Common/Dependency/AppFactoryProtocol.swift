@@ -9,6 +9,6 @@ import Foundation
 
 protocol AppFactoryProtocol {
     
-    func eventsViewModel() -> EventsViewModel
+    var eventsViewModel: EventsViewModel { get }
     
 }

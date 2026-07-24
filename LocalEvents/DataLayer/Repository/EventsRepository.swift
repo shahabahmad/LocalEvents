@@ -24,8 +24,15 @@ class EventsRepository: IEventsRepository {
             .eraseToAnyPublisher()
     }
     
-    func getEvents(location: Coordinate) -> AnyPublisher<[LocalEvent], RepositoryError> {
-                
+    func getEvents(location: Coordinate?) -> AnyPublisher<[LocalEvent], RepositoryError> {
+        guard let location else {
+            return self.eventStore
+                .allEvents()
+                .mapError {_ in
+                    .unknown
+                }
+                .eraseToAnyPublisher()
+        }
         let request = NetworkRequest(endpoint: .getEvents(location),
                                      method: .get)
         

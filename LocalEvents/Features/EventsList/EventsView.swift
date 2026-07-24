@@ -11,14 +11,14 @@ struct EventsView: View {
 
     @State var eventsViewModel: EventsViewModel
     @Environment(EventRouter.self) var router: EventRouter
-    
+
     init(eventsViewModel: EventsViewModel) {
         self.eventsViewModel = eventsViewModel
     }
 
     var body: some View {
         List($eventsViewModel.events) { $event in
-            EventChildView(event: event) {
+            EventChildView(event: event, coordinate: eventsViewModel.location) {
                 eventsViewModel.toggleBookMark(for: event)
             }
                 .onTapGesture {
@@ -27,12 +27,12 @@ struct EventsView: View {
         }
         .listStyle(.plain)
         .onAppear {
-            self.eventsViewModel.fetchEvents()
+            self.eventsViewModel.onAppear()
         }
     }
 }
 
 #Preview {
-    let eventsViewModel = AppFactory().eventsViewModel()
+    let eventsViewModel = AppFactory().eventsViewModel
     EventsView(eventsViewModel: eventsViewModel)
 }

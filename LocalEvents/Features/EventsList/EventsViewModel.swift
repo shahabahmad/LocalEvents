@@ -22,31 +22,51 @@ class EventsViewModel {
     var isLoading = false
     
     var location: Coordinate?
-    
-    init(eventsViewModelUseCaseProvider: EventsViewModelUseCaseProvider) {
+    private let locationService: ILocationService
+
+    init(eventsViewModelUseCaseProvider: EventsViewModelUseCaseProvider, locationService: ILocationService) {
         self.eventsViewModelUseCaseProvider = eventsViewModelUseCaseProvider
+        self.locationService = locationService
+        observeLocation()
+    }
+    
+    func observeLocation() {
+        locationService
+            .locationPublisher
+            .removeDuplicates()
+            .sink { [weak self] coordinate in
+                self?.location = coordinate
+                self?.fetchEvents()
+            }
+            .store(in: &cancellables)
+    }
+    
+    func onAppear() {
+        locationService.requestPermission()
+        locationService.startUpdatingLocation()
+        fetchEvents()
     }
     
     func fetchEvents() {
         if isLoading {
             return
         }
-        let location = Coordinate(latitude: 12.11, longitude: 31.456)
-//        guard let location = location else { return }
         
+        isLoading = true
         self.eventsViewModelUseCaseProvider
             .getNearbyEventsUseCase
             .getNearbyEvents(location: location)
         .receive(on: RunLoop.main)
-        .sink { completed in
+        .sink {[weak self] completed in
+            self?.isLoading = false
             switch completed {
             case .finished:
                 break
             case .failure(let error):
-                self.error = error
+                self?.error = error
             }
-        } receiveValue: { response in
-            self.events.append(contentsOf: response)
+        } receiveValue: { [weak self] response in
+            self?.events.append(contentsOf: response)
         }
         .store(in: &cancellables)
 

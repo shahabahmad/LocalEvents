@@ -9,6 +9,9 @@ import Foundation
 
 class AppFactory: AppFactoryProtocol {
 
+    private lazy var locationService: ILocationService = {
+        MockLocationService()
+    }()
     
     lazy private var urlNetworkSession: NetworkSession = {
         URLNetworkSession(session: URLSession.shared)
@@ -80,9 +83,9 @@ class AppFactory: AppFactoryProtocol {
         )
     }
     
-    func eventsViewModel() -> EventsViewModel {
-        EventsViewModel(eventsViewModelUseCaseProvider: eventsViewModelUseCaseProvider)
-    }
+    lazy var eventsViewModel: EventsViewModel = {
+        EventsViewModel(eventsViewModelUseCaseProvider: eventsViewModelUseCaseProvider, locationService: locationService)
+    }()
     
     private var getImageUseCase: GetImageUseCase {
         GetImageUseCase(imageLoader: imageLoader)

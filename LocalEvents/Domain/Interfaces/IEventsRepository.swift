@@ -9,5 +9,5 @@ import Foundation
 import Combine
 
 protocol IEventsRepository {
-    func getEvents(location: Coordinate) -> AnyPublisher<[LocalEvent], RepositoryError>
+    func getEvents(location: Coordinate?) -> AnyPublisher<[LocalEvent], RepositoryError>
 }

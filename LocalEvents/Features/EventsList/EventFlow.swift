@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EventFlow: View {
     
-    @State var router: EventRouter
+    @Bindable var router: EventRouter
     private let appFactory: AppFactory
 
     init(router: EventRouter, appFactory: AppFactory) {
@@ -19,7 +19,7 @@ struct EventFlow: View {
     
     var body: some View {
         NavigationStack(path: $router.path) {
-            EventsView(eventsViewModel: appFactory.eventsViewModel())
+            EventsView(eventsViewModel: appFactory.eventsViewModel)
                 .navigationDestination(for: EventRoute.self) { route in
                     switch route {
                     case .event(let event):
