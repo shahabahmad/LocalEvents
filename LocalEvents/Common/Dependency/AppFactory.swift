@@ -10,21 +10,33 @@ import Foundation
 class AppFactory: AppFactoryProtocol {
 
     
-//    private var networkSession: NetworkSession {
-//        URLNetworkSession(session: URLSession.shared)
-//    }
-//
-    private var persistenceController: PersistenceController {
+    lazy private var urlNetworkSession: NetworkSession = {
+        URLNetworkSession(session: URLSession.shared)
+    }()
+
+    lazy var imageCache: ImageCache = {
+        ImageDiskCache()
+    }()
+    
+    lazy var imageLoader: IImageLoader = {
+        ImageLoader(session: urlNetworkSession, diskCache: imageCache)
+    }()
+    
+    private lazy var networkCache: CacheStore = {
+        MemoryCacheStore()
+    }()
+    
+    private lazy var persistenceController: PersistenceController = {
         PersistenceController.shared
-    }
+    }()
     
-    private var networkSession: NetworkSession {
+    private lazy var networkSession: NetworkSession = {
         MockNetworkSession()
-    }
+    }()
     
-    private var networkClient: INetworkClient {
-        NetworkClient(session: networkSession)
-    }
+    private lazy var networkClient: INetworkClient = {
+        NetworkClient(session: networkSession, cache: networkCache)
+    }()
     
     private var eventStore: IEventStore {
         EventStore(context: persistenceController.viewContext)
@@ -70,6 +82,14 @@ class AppFactory: AppFactoryProtocol {
     
     func eventsViewModel() -> EventsViewModel {
         EventsViewModel(eventsViewModelUseCaseProvider: eventsViewModelUseCaseProvider)
+    }
+    
+    private var getImageUseCase: GetImageUseCase {
+        GetImageUseCase(imageLoader: imageLoader)
+    }
+    
+    func eventDetailViewModel(event: LocalEvent) -> EventDetailViewModel {
+        EventDetailViewModel(event: event, getImageUseCase: getImageUseCase)
     }
     
 }

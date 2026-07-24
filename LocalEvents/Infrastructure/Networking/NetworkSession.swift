@@ -9,5 +9,6 @@ import Foundation
 import Combine
 
 protocol NetworkSession {
+    
     func dataTaskPublisher(for request: URLRequest) -> AnyPublisher<(data: Data, response: URLResponse), URLError>
 }

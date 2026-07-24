@@ -23,7 +23,7 @@ struct EventFlow: View {
                 .navigationDestination(for: EventRoute.self) { route in
                     switch route {
                     case .event(let event):
-                        EmptyView()
+                        EventDetailView(viewModel: appFactory.eventDetailViewModel(event: event))
                     }
                 }
         }
