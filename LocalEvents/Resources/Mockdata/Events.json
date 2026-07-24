@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "title": "SwiftUI Workshop",
+    "location": {
+      "latitude": 43.6532,
+      "longitude": -79.3832
+    },
+    "time": "2026-08-01",
+    "image_url": "https://picsum.photos/400/300?random=1"
+  },
+  {
+    "id": 2,
+    "title": "iOS Developer Meetup",
+    "location": {
+      "latitude": 43.5890,
+      "longitude": -79.6441
+    },
+    "time": "2026-08-02",
+    "image_url": "https://picsum.photos/400/300?random=2"
+  },
+  {
+    "id": 3,
+    "title": "Combine Deep Dive",
+    "location": {
+      "latitude": 43.4675,
+      "longitude": -79.6877
+    },
+    "time": "2026-08-03",
+    "image_url": "https://picsum.photos/400/300?random=3"
+  },
+  {
+    "id": 4,
+    "title": "Mobile Architecture Conference",
+    "location": {
+      "latitude": 43.7315,
+      "longitude": -79.7624
+    },
+    "time": "2026-08-04",
+    "image_url": "https://picsum.photos/400/300?random=4"
+  },
+  {
+    "id": 5,
+    "title": "Swift Concurrency Talk",
+    "location": {
+      "latitude": 43.8561,
+      "longitude": -79.5085
+    },
+    "time": "2026-08-05",
+    "image_url": "https://picsum.photos/400/300?random=5"
+  },
+  {
+    "id": 6,
+    "title": "Apple Platform Summit",
+    "location": {
+      "latitude": 43.5895,
+      "longitude": -79.6400
+    },
+    "time": "2026-08-06",
+    "image_url": "https://picsum.photos/400/300?random=6"
+  },
+  {
+    "id": 7,
+    "title": "Core Data Best Practices",
+    "location": {
+      "latitude": 43.7001,
+      "longitude": -79.4163
+    },
+    "time": "2026-08-07",
+    "image_url": "https://picsum.photos/400/300?random=7"
+  },
+  {
+    "id": 8,
+    "title": "AI Development on iOS",
+    "location": {
+      "latitude": 43.7731,
+      "longitude": -79.2578
+    },
+    "time": "2026-08-08",
+    "image_url": "https://picsum.photos/400/300?random=8"
+  },
+  {
+    "id": 9,
+    "title": "ARKit Developer Event",
+    "location": {
+      "latitude": 43.7615,
+      "longitude": -79.4111
+    },
+    "time": "2026-08-09",
+    "image_url": "https://picsum.photos/400/300?random=9"
+  },
+  {
+    "id": 10,
+    "title": "UIKit Modernization Session",
+    "location": {
+      "latitude": 43.6538,
+      "longitude": -79.3839
+    },
+    "time": "2026-08-10",
+    "image_url": "https://picsum.photos/400/300?random=10"
+  }
+]
