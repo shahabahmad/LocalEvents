@@ -10,10 +10,18 @@ import CoreData
 
 @main
 struct LocalEventsApp: App {
-
+    let persistenceController = PersistenceController.shared
+    let eventRouter = EventRouter()
+    let appfactory = AppFactory()
+    
     var body: some Scene {
         WindowGroup {
-
+            EventFlow(router: eventRouter, appFactory: appfactory)
+                .environment(\.managedObjectContext,
+                              persistenceController
+                    .container
+                    .viewContext
+                )
         }
     }
 }

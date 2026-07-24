@@ -16,10 +16,9 @@ class GetNearbyEventsUseCase {
         self.repository = repository
     }
     
-    func getNearbyEvents(page: Int,
-                         location: Coordinate) -> AnyPublisher<[LocalEvent], RepositoryError> {
+    func getNearbyEvents(location: Coordinate) -> AnyPublisher<[LocalEvent], RepositoryError> {
         
-        self.repository.getEvents(page: page, location: location)
+        self.repository.getEvents(location: location)
     }
 }
 
