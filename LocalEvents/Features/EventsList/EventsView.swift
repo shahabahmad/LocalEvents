@@ -20,6 +20,8 @@ struct EventsView: View {
         List($eventsViewModel.events) { $event in
             EventChildView(event: event, coordinate: eventsViewModel.location) {
                 eventsViewModel.toggleBookMark(for: event)
+            } openMap: {
+                eventsViewModel.openMap(for: event)
             }
                 .onTapGesture {
                     router.navigateToDetail(event: event)

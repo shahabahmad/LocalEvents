@@ -23,10 +23,12 @@ class EventsViewModel {
     
     var location: Coordinate?
     private let locationService: ILocationService
+    private let mapsService: IMapsService
 
-    init(eventsViewModelUseCaseProvider: EventsViewModelUseCaseProvider, locationService: ILocationService) {
+    init(eventsViewModelUseCaseProvider: EventsViewModelUseCaseProvider, locationService: ILocationService, mapsService: IMapsService) {
         self.eventsViewModelUseCaseProvider = eventsViewModelUseCaseProvider
         self.locationService = locationService
+        self.mapsService = mapsService
         observeLocation()
     }
     
@@ -45,6 +47,13 @@ class EventsViewModel {
         locationService.requestPermission()
         locationService.startUpdatingLocation()
         fetchEvents()
+    }
+    
+    func openMap(for event: LocalEvent) {
+        self.mapsService.openMap(
+            coordinate: event.location,
+            name: event.title
+        )
     }
     
     func fetchEvents() {

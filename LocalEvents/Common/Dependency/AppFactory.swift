@@ -9,6 +9,10 @@ import Foundation
 
 class AppFactory: AppFactoryProtocol {
 
+    private lazy var mapsService: IMapsService = {
+        MapsService()
+    }()
+    
     private lazy var locationService: ILocationService = {
         MockLocationService()
     }()
@@ -84,7 +88,9 @@ class AppFactory: AppFactoryProtocol {
     }
     
     lazy var eventsViewModel: EventsViewModel = {
-        EventsViewModel(eventsViewModelUseCaseProvider: eventsViewModelUseCaseProvider, locationService: locationService)
+        EventsViewModel(eventsViewModelUseCaseProvider: eventsViewModelUseCaseProvider,
+                        locationService: locationService,
+                        mapsService: mapsService)
     }()
     
     private var getImageUseCase: GetImageUseCase {

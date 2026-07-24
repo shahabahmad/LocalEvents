@@ -12,6 +12,7 @@ struct EventChildView: View {
     let event: LocalEvent
     let coordinate: Coordinate?
     var bookmarkTapped: () -> Void
+    var openMap: () -> Void
     let distanceCalulator = DistanceCalculator()
     
     var body: some View {
@@ -33,6 +34,18 @@ struct EventChildView: View {
 
                 
             Spacer()
+            Button {
+                openMap()
+            } label: {
+                Image(systemName: "map.fill")
+            }
+            .foregroundStyle(.yellow)
+            .padding(10)
+            .background(
+                Circle()
+                    .fill(.black.opacity(0.1))
+            )
+            .buttonStyle(.plain)
             Button {
                 bookmarkTapped()
             } label: {
