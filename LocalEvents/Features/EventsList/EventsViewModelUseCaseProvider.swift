@@ -9,4 +9,7 @@ import Foundation
 
 struct EventsViewModelUseCaseProvider {
     let getNearbyEventsUseCase: GetNearbyEventsUseCase
+    let getBookmarksUseCase: GetBookmarksUseCase
+    let addBookmarkUseCase: AddBookmarkUseCase
+    let removeBookmarkUseCase: RemoveBookmarkUseCase
 }

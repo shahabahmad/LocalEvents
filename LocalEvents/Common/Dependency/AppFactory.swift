@@ -39,9 +39,32 @@ class AppFactory: AppFactoryProtocol {
         GetNearbyEventsUseCase(repository: eventRepository)
     }
     
+    private var bookmarkStore: IBookmarkStore {
+        BookmarkStore(context: persistenceController.viewContext)
+    }
+    
+    private var bookmarkRepository: IBookmarkRepository {
+        BookmarkRepository(bookmarkStore: bookmarkStore)
+    }
+    
+    private var getBookmarksUseCase: GetBookmarksUseCase {
+        GetBookmarksUseCase(repository: bookmarkRepository)
+    }
+    
+    private var addBookmarkUseCase: AddBookmarkUseCase {
+        AddBookmarkUseCase(repository: bookmarkRepository)
+    }
+    
+    private var removeBookmarkUseCase: RemoveBookmarkUseCase {
+        RemoveBookmarkUseCase(repository: bookmarkRepository)
+    }
+    
     private var eventsViewModelUseCaseProvider: EventsViewModelUseCaseProvider {
         EventsViewModelUseCaseProvider(
-            getNearbyEventsUseCase: getNearByEventsUseCase
+            getNearbyEventsUseCase: getNearByEventsUseCase,
+            getBookmarksUseCase: getBookmarksUseCase,
+            addBookmarkUseCase: addBookmarkUseCase,
+            removeBookmarkUseCase: removeBookmarkUseCase
         )
     }
     

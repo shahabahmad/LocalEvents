@@ -58,9 +58,6 @@ class EventsRepository: IEventsRepository {
 
                 return self.eventStore
                     .syncEvents(events: events)
-                    .map {
-                        events
-                    }
                     .mapError {_ in
                         .unknown
                     }
@@ -79,5 +76,5 @@ class EventsRepository: IEventsRepository {
                     .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
-    }    
+    }
 }

@@ -53,11 +53,35 @@ class EventsViewModel {
     }
     
     func addBookmark(for index: Int) {
-        
+        self.eventsViewModelUseCaseProvider.addBookmarkUseCase.addBookmark(event: events[index])
+            .sink { [weak self] completed in
+                switch completed {
+                    case .finished:
+                    break
+                case .failure(let error):
+                    self?.error = error
+                    self?.events[index].isBookMarked.toggle()
+                }
+            } receiveValue: { _ in
+                
+            }
+            .store(in: &cancellables)
     }
     
     func removeBookmark(for index: Int) {
-        
+        self.eventsViewModelUseCaseProvider.removeBookmarkUseCase.removeBookmark(event: events[index])
+            .sink { [weak self] completed in
+                switch completed {
+                    case .finished:
+                    break
+                case .failure(let error):
+                    self?.error = error
+                    self?.events[index].isBookMarked.toggle()
+                }
+            } receiveValue: { _ in
+                
+            }
+            .store(in: &cancellables)
     }
     
     func toggleBookMark(for event: LocalEvent) {

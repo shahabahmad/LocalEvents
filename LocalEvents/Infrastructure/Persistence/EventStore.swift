@@ -14,6 +14,9 @@ final class EventStore: IEventStore {
     private let context: NSManagedObjectContext
 
     init(context: NSManagedObjectContext) {
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+//        print("Documents Directory: \(documentsURL.path)")
+
         self.context = context
     }
     
@@ -30,9 +33,7 @@ final class EventStore: IEventStore {
             }
             self.context.perform {
                 do {
-                    let request: NSFetchRequest<EventEntity> =
-                        EventEntity.fetchRequest()
-                    let eventEntities = try self.context.fetch(request)
+                    let eventEntities = try self.fetchAllEvents()
                     let events = eventEntities.map {
                         $0.toDomain()
                     }
@@ -45,7 +46,7 @@ final class EventStore: IEventStore {
         .eraseToAnyPublisher()
     }
     
-    func syncEvents(events: [LocalEvent]) -> AnyPublisher<Void, DBError> {
+    func syncEvents(events: [LocalEvent]) -> AnyPublisher<[LocalEvent], DBError> {
         Future { [weak self] promise in
             guard let self else {
                 promise(.failure(.other))
@@ -69,7 +70,6 @@ final class EventStore: IEventStore {
                                 entity: existingEntity,
                                 with: event
                             )
-
                         } else {
                             let newEntity =
                             EventEntity(context: self.context)
@@ -91,7 +91,11 @@ final class EventStore: IEventStore {
                         self.context.delete($0)
                     }
                     try self.context.save()
-                    promise(.success(()))
+                    let eventEntities = try self.fetchAllEvents()
+                    let localEvents = eventEntities.map {
+                        $0.toDomain()
+                    }
+                    promise(.success((localEvents)))
                 } catch {
                     promise(
                         .failure(
@@ -106,7 +110,6 @@ final class EventStore: IEventStore {
     
     func update(entity: EventEntity, with event: LocalEvent ) {
 
-        entity.id = Int64(event.id)
         entity.title = event.title
 
         entity.latitude =
@@ -119,5 +122,6 @@ final class EventStore: IEventStore {
 
         entity.imageUrlString =
             event.imageURLString
+        
     }
 }

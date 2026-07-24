@@ -10,5 +10,5 @@ import Combine
 
 protocol IEventStore {
     func allEvents() -> AnyPublisher<[LocalEvent], DBError>
-    func syncEvents(events: [LocalEvent]) -> AnyPublisher<Void, DBError>
+    func syncEvents(events: [LocalEvent]) -> AnyPublisher<[LocalEvent], DBError>
 }
