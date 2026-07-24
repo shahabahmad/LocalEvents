@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 
+@MainActor
 @Observable
 class EventsViewModel {
     
@@ -29,7 +30,6 @@ class EventsViewModel {
         self.eventsViewModelUseCaseProvider = eventsViewModelUseCaseProvider
         self.locationService = locationService
         self.mapsService = mapsService
-        observeLocation()
     }
     
     func observeLocation() {
@@ -47,6 +47,7 @@ class EventsViewModel {
         locationService.requestPermission()
         locationService.startUpdatingLocation()
         fetchEvents()
+        observeLocation()
     }
     
     func openMap(for event: LocalEvent) {
@@ -122,8 +123,5 @@ class EventsViewModel {
             removeBookmark(for: index)
         }
     }
-    
-    func getAllBookmarkedEvents() {
 
-    }
 }
